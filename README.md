@@ -28,7 +28,7 @@ All sherlock is, at it's core, is a setter and getter of sorts.
 
 ```golang
 
-s := New() // create a new sherlock
+s := sherlock.New() // create a new sherlock
 
 // create NewProperties on the entity(date|string|int|*list) *coming later
 s.Entity("kcmerrill@gmail.com").NewProperty("username", "string").Set("themayor")
@@ -39,7 +39,7 @@ if name, _ := s.Entity("kcmerrill@gmail.com").Property("username").String(); nam
 
 // make sure the entity creation time isn't zero
 if s.Entity("kcmerrill@gmail.com").Created().IsZero() {
-    t.Fatalf("Created sould not be a zero time.Time")
+    t.Fatalf("Created should not be a zero time.Time")
 }
 
 // lets play with the counter now
