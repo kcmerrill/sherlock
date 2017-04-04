@@ -29,4 +29,12 @@ func TestSherlockEntity(t *testing.T) {
 	if i, _ := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1100 {
 		t.Fatalf("Was expecting 'counter' to be 1100")
 	}
+
+	// quick, add an event
+	e.Event("clicked on button 'A'")
+	e.Event("clicked on button 'B'")
+
+	if e.Events[0] != "clicked on button 'A'" {
+		t.Fatalf("Was Expecting button a to be clicked!")
+	}
 }

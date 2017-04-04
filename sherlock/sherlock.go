@@ -10,6 +10,13 @@ type Entity struct {
 	id         string
 	lock       *sync.Mutex
 	properties map[string]Property
+	Events     []string
+}
+
+// Event object tracks a specific event
+type Event struct {
+	Created     time.Time
+	Description string
 }
 
 // Property will return an entities property
@@ -19,6 +26,14 @@ func (e *Entity) Property(name string) Property {
 
 	// no error checking? YOLO
 	return e.properties[name]
+}
+
+// Event will create a new event for an entitiy
+func (e *Entity) Event(event string) {
+	e.lock.Lock()
+	defer e.lock.Unlock()
+
+	e.Events = append(e.Events, event)
 }
 
 // NewProperty will create and return a new property
@@ -94,6 +109,7 @@ func NewEntity(id string) *Entity {
 	e := &Entity{id: id}
 	e.properties = make(map[string]Property)
 	e.lock = &sync.Mutex{}
+	e.Events = make([]string, 0)
 	e.NewProperty("_created", "date").Set(time.Now())
 	e.NewProperty("_id", "string").Set(id)
 	return e
