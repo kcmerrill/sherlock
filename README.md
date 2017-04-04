@@ -1,5 +1,7 @@
 # sherlock
 
+[![Join the chat at https://gitter.im/kcmerrill/sherlock](https://badges.gitter.im/kcmerrill/sherlock.svg)](https://gitter.im/kcmerrill/sherlock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Track everything
 
 [![Build Status](https://travis-ci.org/kcmerrill/sherlock.svg?branch=master)](https://travis-ci.org/kcmerrill/sherlock) [![Join the chat at https://gitter.im/kcmerrill/sherlock](https://badges.gitter.im/kcmerrill/sherlock.svg)](https://gitter.im/kcmerrill/sherlock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
