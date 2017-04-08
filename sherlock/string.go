@@ -17,8 +17,8 @@ func NewString() *String {
 // String property type
 type String struct {
 	CreatedDate time.Time `json:"created"`
-	Modified    time.Time
-	Value       string
+	Modified    time.Time `json:"modified"`
+	Value       string    `json:"value"`
 	lock        *sync.Mutex
 }
 

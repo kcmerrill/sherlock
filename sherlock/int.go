@@ -18,8 +18,8 @@ func NewInt() *Int {
 // Int property type
 type Int struct {
 	CreatedDate time.Time `json:"created"`
-	Modified    time.Time
-	Value       int
+	Modified    time.Time `json:"modified"`
+	Value       int       `json:"value"`
 	lock        *sync.Mutex
 }
 

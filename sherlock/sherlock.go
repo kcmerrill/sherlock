@@ -7,16 +7,16 @@ import (
 
 // Entity holds our entity information
 type Entity struct {
-	ID         string
+	ID         string `json:"id"`
 	lock       *sync.Mutex
-	Properties map[string]Property
-	Events     []string
+	Properties map[string]Property `json:"properties"`
+	Events     []string            `json:"events"`
 }
 
 // Event object tracks a specific event
 type Event struct {
-	Created     time.Time
-	Description string
+	Created     time.Time `json:"created"`
+	Description string    `json:"description"`
 }
 
 // Property will return an entities property
@@ -116,7 +116,7 @@ type Property interface {
 // Sherlock struct
 type Sherlock struct {
 	lock     *sync.Mutex
-	Entities map[string]*Entity
+	Entities map[string]*Entity `json:"entities"`
 }
 
 // E is shorthand for Entity

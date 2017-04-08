@@ -17,8 +17,8 @@ func NewDate() *Date {
 // Date property type
 type Date struct {
 	CreatedDate time.Time `json:"created"`
-	Modified    time.Time
-	Value       time.Time
+	Modified    time.Time `json:"modified"`
+	Value       time.Time `json:"value"`
 	lock        *sync.Mutex
 }
 
