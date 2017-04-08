@@ -53,24 +53,24 @@ func (i *Int) Created() time.Time {
 }
 
 // String returns the Ints value
-func (i *Int) String() (string, error) {
+func (i *Int) String() string {
 	i.lock.Lock()
 	defer i.lock.Unlock()
-	return strconv.Itoa(i.value), nil
+	return strconv.Itoa(i.value)
 }
 
 // Int returns the ints value
-func (i *Int) Int() (int, error) {
+func (i *Int) Int() int {
 	i.lock.Lock()
 	defer i.lock.Unlock()
-	return i.value, nil
+	return i.value
 }
 
 // List converts Int to a list
-func (i *Int) List() ([]string, error) {
+func (i *Int) List() []string {
 	i.lock.Lock()
 	defer i.lock.Unlock()
-	return []string{strconv.Itoa(i.value)}, nil
+	return []string{strconv.Itoa(i.value)}
 }
 
 // Add increments value by something

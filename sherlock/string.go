@@ -1,7 +1,6 @@
 package sherlock
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -53,22 +52,22 @@ func (s *String) Created() time.Time {
 }
 
 // String returns the strings value
-func (s *String) String() (string, error) {
+func (s *String) String() string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return s.value, nil
+	return s.value
 }
 
 // Int not used
-func (s *String) Int() (int, error) {
-	return 0, fmt.Errorf("string does not implement IntValue")
+func (s *String) Int() int {
+	return 0
 }
 
 // List converts string to a list
-func (s *String) List() ([]string, error) {
+func (s *String) List() []string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return []string{s.value}, nil
+	return []string{s.value}
 }
 
 // Add not implemented

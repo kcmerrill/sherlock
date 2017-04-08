@@ -8,22 +8,22 @@ func TestStringParam(t *testing.T) {
 	// set to my email
 	s.Set("kcmerrill@gmail.com")
 
-	if email, _ := s.String(); email != "kcmerrill@gmail.com" {
+	if email := s.String(); email != "kcmerrill@gmail.com" {
 		t.Fatalf("Expected 'kcmerrill@gmail.com', Actual: %s", email)
 	}
 
-	if lv, _ := s.List(); len(lv) != 1 {
+	if lv := s.List(); len(lv) != 1 {
 		t.Fatalf("Expected string ListValue() to return a slice of 1")
 	}
 
-	if lv, _ := s.List(); lv[0] != "kcmerrill@gmail.com" {
+	if lv := s.List(); lv[0] != "kcmerrill@gmail.com" {
 		t.Fatalf("Expected string ListValue() to return a slice of 1 with [0] = 'kcmerrill@gmail.com'")
 	}
 
 	// test reset
 	s.Reset()
 
-	if empty, _ := s.String(); empty != "" {
+	if empty := s.String(); empty != "" {
 		t.Fatalf("Expected string Reset() to reset the value to an empty string")
 	}
 

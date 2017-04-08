@@ -7,9 +7,9 @@ import (
 
 // Entity holds our entity information
 type Entity struct {
-	id         string
+	ID         string
 	lock       *sync.Mutex
-	properties map[string]Property
+	Properties map[string]Property
 	Events     []string
 }
 
@@ -25,7 +25,7 @@ func (e *Entity) Property(name string) Property {
 	defer e.lock.Unlock()
 
 	// no error checking? YOLO
-	return e.properties[name]
+	return e.Properties[name]
 }
 
 // Event will create a new event for an entitiy
@@ -39,7 +39,7 @@ func (e *Entity) Event(event string) {
 // I will create a new int property if it doesn't exist
 func (e *Entity) I(name string) Property {
 	e.lock.Lock()
-	p, exists := e.properties[name]
+	p, exists := e.Properties[name]
 	// unlock everything
 	e.lock.Unlock()
 	if exists {
@@ -51,7 +51,7 @@ func (e *Entity) I(name string) Property {
 // S will create a new string property if it doesn't exist
 func (e *Entity) S(name string) Property {
 	e.lock.Lock()
-	p, exists := e.properties[name]
+	p, exists := e.Properties[name]
 	// unlock everything
 	e.lock.Unlock()
 	if exists {
@@ -63,7 +63,7 @@ func (e *Entity) S(name string) Property {
 // D will create a new string property if it doesn't exist
 func (e *Entity) D(name string) Property {
 	e.lock.Lock()
-	p, exists := e.properties[name]
+	p, exists := e.Properties[name]
 	// unlock everything
 	e.lock.Unlock()
 	if exists {
@@ -90,13 +90,13 @@ func (e *Entity) NewProperty(name, param string) Property {
 		p = NewString()
 	}
 
-	e.properties[name] = p
-	return e.properties[name]
+	e.Properties[name] = p
+	return e.Properties[name]
 }
 
 // Created returns the entity creation date(aka the _created param)
 func (e *Entity) Created() time.Time {
-	created, _ := e.Property("_created").Int()
+	created := e.Property("_created").Int()
 	return time.Unix(int64(created), 0)
 }
 
@@ -106,9 +106,9 @@ type Property interface {
 	Add(something interface{})
 	Remove(something interface{})
 	Set(something interface{})
-	String() (string, error)
-	Int() (int, error)
-	List() ([]string, error)
+	String() string
+	Int() int
+	List() []string
 	LastModified() time.Time
 	Created() time.Time
 }
@@ -147,8 +147,8 @@ func New() *Sherlock {
 
 // NewEntity returns a new entity
 func NewEntity(id string) *Entity {
-	e := &Entity{id: id}
-	e.properties = make(map[string]Property)
+	e := &Entity{ID: id}
+	e.Properties = make(map[string]Property)
 	e.lock = &sync.Mutex{}
 	e.Events = make([]string, 0)
 	e.NewProperty("_created", "date").Set(time.Now())

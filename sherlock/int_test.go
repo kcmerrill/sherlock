@@ -8,14 +8,14 @@ func TestIntParam(t *testing.T) {
 	// set to 1000
 	i.Set(1000)
 
-	if val, _ := i.String(); val != "1000" {
+	if val := i.String(); val != "1000" {
 		t.Fatalf("Expected '1000', Actual: %s", val)
 	}
 
 	// test reset
 	i.Reset()
 
-	if empty, _ := i.Int(); empty != 0 {
+	if empty := i.Int(); empty != 0 {
 		t.Fatalf("Expected Int Reset() to reset the value to 0")
 	}
 

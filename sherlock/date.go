@@ -52,24 +52,24 @@ func (d *Date) Created() time.Time {
 }
 
 // String returns the Dates value
-func (d *Date) String() (string, error) {
+func (d *Date) String() string {
 	d.lock.Lock()
 	defer d.lock.Unlock()
-	return d.value.String(), nil
+	return d.value.String()
 }
 
 // Int returns the Dates value
-func (d *Date) Int() (int, error) {
+func (d *Date) Int() int {
 	d.lock.Lock()
 	defer d.lock.Unlock()
-	return int(d.value.Unix()), nil
+	return int(d.value.Unix())
 }
 
 // List converts Date to a list
-func (d *Date) List() ([]string, error) {
+func (d *Date) List() []string {
 	d.lock.Lock()
 	defer d.lock.Unlock()
-	return []string{d.value.String()}, nil
+	return []string{d.value.String()}
 }
 
 // Add increments value by something
