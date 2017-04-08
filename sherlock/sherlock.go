@@ -36,6 +36,42 @@ func (e *Entity) Event(event string) {
 	e.Events = append(e.Events, event)
 }
 
+// I will create a new int property if it doesn't exist
+func (e *Entity) I(name string) Property {
+	e.lock.Lock()
+	p, exists := e.properties[name]
+	// unlock everything
+	e.lock.Unlock()
+	if exists {
+		return p
+	}
+	return e.NewProperty(name, "int")
+}
+
+// S will create a new string property if it doesn't exist
+func (e *Entity) S(name string) Property {
+	e.lock.Lock()
+	p, exists := e.properties[name]
+	// unlock everything
+	e.lock.Unlock()
+	if exists {
+		return p
+	}
+	return e.NewProperty(name, "string")
+}
+
+// D will create a new string property if it doesn't exist
+func (e *Entity) D(name string) Property {
+	e.lock.Lock()
+	p, exists := e.properties[name]
+	// unlock everything
+	e.lock.Unlock()
+	if exists {
+		return p
+	}
+	return e.NewProperty(name, "date")
+}
+
 // NewProperty will create and return a new property
 func (e *Entity) NewProperty(name, param string) Property {
 	e.lock.Lock()
@@ -81,6 +117,11 @@ type Property interface {
 type Sherlock struct {
 	lock     *sync.Mutex
 	entities map[string]*Entity
+}
+
+// E is shorthand for Entity
+func (s *Sherlock) E(id string) *Entity {
+	return s.Entity(id)
 }
 
 // Entity returns a string entity, if none exist, creates one

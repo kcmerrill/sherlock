@@ -1,6 +1,6 @@
 # sherlock
 
-Track everything. It's a knockoff. Knock waaaay waaaaay off.
+Entity tracker. What you track is up to you. 
 
 [![Build Status](https://travis-ci.org/kcmerrill/sherlock.svg?branch=master)](https://travis-ci.org/kcmerrill/sherlock) [![Join the chat at https://gitter.im/kcmerrill/sherlock](https://badges.gitter.im/kcmerrill/sherlock.svg)](https://gitter.im/kcmerrill/sherlock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,15 +8,11 @@ Track everything. It's a knockoff. Knock waaaay waaaaay off.
 
 ## What is it
 
-A lot of front end services enable tracking via curl requests to build up entities. For example, a user joins your site with an email address of `kcmerrill@gmail.com`. A new entity is created and off of that you can start to track things. What you deciede to track is completly up to you. You can increment counters, store strings, store lists, unique lists etc etc ... 
+A lot of front end services enable tracking via curl requests to build up entities. For example, a user joins your site with an email address of `kcmerrill@gmail.com`. A new entity is created and off of that you can start to track things. What you deceide to track is completly up to you. You can increment counters, store strings, store lists, unique lists etc etc ... 
 
 For now, sherlock is only in memory(eventually we will store entities in a database). More to come.
 
-In time we can add a webservice component but for now, in memory and backend go native services only.
-
 ## Usage
-
-All sherlock is, at it's core, is a setter and getter of sorts. 
 
 ```golang
 
@@ -24,6 +20,9 @@ s := sherlock.New() // create a new sherlock
 
 // create NewProperties on the entity(date|string|int|*list) *coming later
 s.Entity("kcmerrill@gmail.com").NewProperty("username", "string").Set("themayor")
+// lets create another entity property but with shorthand string
+s.Entity("doesnotexist").S("str_does_not_exist").Set("some_value")
+s.Entity("doesnotexist").I("i_does_not_exist").Set(10)
 
 if name, _ := s.Entity("kcmerrill@gmail.com").Property("username").String(); name != "themayor" {
     t.Fatalf("Expected 'themayor', Actual: '%s'", name)
