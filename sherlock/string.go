@@ -8,24 +8,24 @@ import (
 // NewString inits the string struct
 func NewString() *String {
 	return &String{
-		created:  time.Now(),
-		modified: time.Now(),
-		lock:     &sync.Mutex{},
+		CreatedDate: time.Now(),
+		Modified:    time.Now(),
+		lock:        &sync.Mutex{},
 	}
 }
 
 // String property type
 type String struct {
-	created  time.Time
-	modified time.Time
-	value    string
-	lock     *sync.Mutex
+	CreatedDate time.Time `json:"created"`
+	Modified    time.Time
+	Value       string
+	lock        *sync.Mutex
 }
 
 // Reset string to ""
 func (s *String) Reset() {
 	s.lock.Lock()
-	s.value = ""
+	s.Value = ""
 	s.lock.Unlock()
 }
 
@@ -33,29 +33,29 @@ func (s *String) Reset() {
 func (s *String) Set(something interface{}) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	s.value = something.(string)
-	s.modified = time.Now()
+	s.Value = something.(string)
+	s.Modified = time.Now()
 }
 
 // LastModified returs the last modified time
 func (s *String) LastModified() time.Time {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return s.modified
+	return s.Modified
 }
 
 // Created returns the created time
 func (s *String) Created() time.Time {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return s.created
+	return s.CreatedDate
 }
 
 // String returns the strings value
 func (s *String) String() string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return s.value
+	return s.Value
 }
 
 // Int not used
@@ -67,7 +67,7 @@ func (s *String) Int() int {
 func (s *String) List() []string {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	return []string{s.value}
+	return []string{s.Value}
 }
 
 // Add not implemented

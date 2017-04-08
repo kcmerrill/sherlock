@@ -116,7 +116,7 @@ type Property interface {
 // Sherlock struct
 type Sherlock struct {
 	lock     *sync.Mutex
-	entities map[string]*Entity
+	Entities map[string]*Entity
 }
 
 // E is shorthand for Entity
@@ -129,19 +129,19 @@ func (s *Sherlock) Entity(id string) *Entity {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	if _, exists := s.entities[id]; !exists {
+	if _, exists := s.Entities[id]; !exists {
 		// we need to create a blank entity
-		s.entities[id] = NewEntity(id)
+		s.Entities[id] = NewEntity(id)
 	}
 
-	return s.entities[id]
+	return s.Entities[id]
 }
 
 // New returns a newly initialized sherlock
 func New() *Sherlock {
 	s := &Sherlock{}
 	s.lock = &sync.Mutex{}
-	s.entities = make(map[string]*Entity)
+	s.Entities = make(map[string]*Entity)
 	return s
 }
 
@@ -152,6 +152,5 @@ func NewEntity(id string) *Entity {
 	e.lock = &sync.Mutex{}
 	e.Events = make([]string, 0)
 	e.NewProperty("_created", "date").Set(time.Now())
-	e.NewProperty("_id", "string").Set(id)
 	return e
 }
