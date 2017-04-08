@@ -75,3 +75,11 @@ func (s *String) Add(something interface{}) {}
 
 // Remove not implemented
 func (s *String) Remove(something interface{}) {}
+
+// Bool returns a bool if the string is set or not
+func (s *String) Bool() bool {
+	if s.Value == "" {
+		return false
+	}
+	return true
+}

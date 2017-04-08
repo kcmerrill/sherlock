@@ -48,6 +48,18 @@ func (e *Entity) I(name string) Property {
 	return e.NewProperty(name, "int")
 }
 
+// B will create a new bool property if it doesn't exist
+func (e *Entity) B(name string) Property {
+	e.lock.Lock()
+	p, exists := e.Properties[name]
+	// unlock everything
+	e.lock.Unlock()
+	if exists {
+		return p
+	}
+	return e.NewProperty(name, "bool")
+}
+
 // S will create a new string property if it doesn't exist
 func (e *Entity) S(name string) Property {
 	e.lock.Lock()
@@ -84,6 +96,9 @@ func (e *Entity) NewProperty(name, param string) Property {
 		break
 	case "date":
 		p = NewDate()
+		break
+	case "bool":
+		p = NewBool()
 	case "string":
 		fallthrough
 	default:
@@ -109,6 +124,7 @@ type Property interface {
 	String() string
 	Int() int
 	List() []string
+	Bool() bool
 	LastModified() time.Time
 	Created() time.Time
 }

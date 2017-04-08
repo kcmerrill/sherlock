@@ -82,5 +82,13 @@ func (i *Int) Add(something interface{}) {
 	i.Modified = time.Now()
 }
 
+// Bool returns true/false
+func (i *Int) Bool() bool {
+	if i.Value > 0 {
+		return true
+	}
+	return false
+}
+
 // Remove not implemented
 func (i *Int) Remove(something interface{}) {}

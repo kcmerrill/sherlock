@@ -18,7 +18,7 @@ For now, sherlock is only in memory(eventually we will store entities in a datab
 
 s := sherlock.New() // create a new sherlock
 
-// create NewProperties on the entity(date|string|int|*list) *coming later
+// create NewProperties on the entity(date|string|int|bool|*list) *coming later
 s.Entity("kcmerrill@gmail.com").NewProperty("username", "string").Set("themayor")
 // lets create another entity property but with shorthand string
 s.Entity("doesnotexist").S("str_does_not_exist").Set("some_value")

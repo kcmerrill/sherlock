@@ -85,3 +85,8 @@ func (d *Date) Add(something interface{}) {
 
 // Remove not implemented
 func (d *Date) Remove(something interface{}) {}
+
+// Bool returns if zero()
+func (d *Date) Bool() bool {
+	return d.Value.IsZero()
+}
