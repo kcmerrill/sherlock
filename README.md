@@ -24,7 +24,7 @@ s.Entity("kcmerrill@gmail.com").NewProperty("username", "string").Set("themayor"
 s.Entity("doesnotexist").S("str_does_not_exist").Set("some_value")
 s.Entity("doesnotexist").I("i_does_not_exist").Set(10)
 
-if name, _ := s.Entity("kcmerrill@gmail.com").Property("username").String(); name != "themayor" {
+if name := s.Entity("kcmerrill@gmail.com").Property("username").String(); name != "themayor" {
     t.Fatalf("Expected 'themayor', Actual: '%s'", name)
 }
 
@@ -37,14 +37,14 @@ if s.Entity("kcmerrill@gmail.com").Created().IsZero() {
 e := s.Entity("kcmerrill@gmail.com")
 e.NewProperty("counter", "int").Set(1000)
 
-if i, _ := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1000 {
+if i := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1000 {
     t.Fatalf("Was expecting 'counter' to be 1000")
 }
 
 // Add to it
 e.Property("counter").Add(100)
 
-if i, _ := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1100 {
+if i := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1100 {
     t.Fatalf("Was expecting 'counter' to be 1100")
 }
 
