@@ -35,7 +35,7 @@ func TestSherlockEntity(t *testing.T) {
 	e.Event("clicked on button 'A'")
 	e.Event("clicked on button 'B'")
 
-	if e.Events[0] != "clicked on button 'A'" {
+	if e.Events[0].Description != "clicked on button 'A'" {
 		t.Fatalf("Was Expecting button a to be clicked!")
 	}
 }

@@ -90,5 +90,11 @@ func (i *Int) Bool() bool {
 	return false
 }
 
-// Remove not implemented
-func (i *Int) Remove(something interface{}) {}
+// Remove removes X from the int
+func (i *Int) Remove(something interface{}) {
+	i.lock.Lock()
+	defer i.lock.Unlock()
+	by := something.(int)
+	i.Value -= by
+	i.Modified = time.Now()
+}
