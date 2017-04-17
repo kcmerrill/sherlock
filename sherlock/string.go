@@ -83,3 +83,8 @@ func (s *String) Bool() bool {
 	}
 	return true
 }
+
+// Type returns the type of this property
+func (s *String) Type() string {
+	return "string"
+}

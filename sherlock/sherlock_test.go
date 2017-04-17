@@ -72,3 +72,17 @@ func TestShortValueCreators(t *testing.T) {
 		t.Fatalf("Expected '', Actual '%s'", empty)
 	}
 }
+
+func TestEntityHas(t *testing.T) {
+	s := New()
+	s.E("kcmerrill@gmail.com")
+	if s.E("kcmerrill@gmail.com").Has("username") {
+		t.Fatalf("We didn't set an email on this entity ... should not exist")
+	}
+
+	s.E("kcmerrill@gmail.com").S("username").Set("kcmerrill")
+
+	if !s.E("kcmerrill@gmail.com").Has("username") {
+		t.Fatalf("username should now be set on this entity")
+	}
+}

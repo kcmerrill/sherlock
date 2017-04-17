@@ -1,0 +1,4 @@
+package: github.com/kcmerrill/sherlock
+import:
+- package: github.com/gorilla/mux
+- package: github.com/sirupsen/logrus

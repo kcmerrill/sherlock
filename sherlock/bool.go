@@ -88,3 +88,8 @@ func (b *Bool) Remove(something interface{}) {}
 func (b *Bool) Bool() bool {
 	return b.Value
 }
+
+// Type returns the type of this property
+func (b *Bool) Type() string {
+	return "bool"
+}

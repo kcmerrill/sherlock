@@ -90,3 +90,8 @@ func (d *Date) Remove(something interface{}) {}
 func (d *Date) Bool() bool {
 	return d.Value.IsZero()
 }
+
+// Type returns the type of this property
+func (d *Date) Type() string {
+	return "date"
+}

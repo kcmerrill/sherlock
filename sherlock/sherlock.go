@@ -45,6 +45,11 @@ func (e *Entity) Event(msg string) {
 	event := NewEvent(msg)
 
 	e.Events = append(e.Events, event)
+
+	// only hold on to 50 or so ...
+	if len(e.Events) > 50 {
+		e.Events = e.Events[1:len(e.Events)]
+	}
 }
 
 // I will create a new int property if it doesn't exist
@@ -100,6 +105,11 @@ func (e *Entity) NewProperty(name, param string) Property {
 	e.lock.Lock()
 	defer e.lock.Unlock()
 
+	// see if it already exists
+	if _, exists := e.Properties[name]; exists {
+		return e.Properties[name]
+	}
+
 	var p Property
 	switch param {
 	case "int":
@@ -116,12 +126,16 @@ func (e *Entity) NewProperty(name, param string) Property {
 		p = NewString()
 	}
 
-	if _, exists := e.Properties[name]; exists {
-		return e.Properties[name]
-	}
-
 	e.Properties[name] = p
 	return e.Properties[name]
+}
+
+// Has deterines if an entity has a property or not
+func (e *Entity) Has(property string) bool {
+	e.lock.Lock()
+	defer e.lock.Unlock()
+	_, exists := e.Properties[property]
+	return exists
 }
 
 // Created returns the entity creation date(aka the _created param)
@@ -151,6 +165,7 @@ type Property interface {
 	Bool() bool
 	LastModified() time.Time
 	Created() time.Time
+	Type() string
 }
 
 // Sherlock struct

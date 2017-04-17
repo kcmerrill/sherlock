@@ -49,3 +49,45 @@ if i := s.Entity("kcmerrill@gmail.com").Property("counter").Int(); i != 1100 {
 }
 
 ```
+
+## UDP
+
+You can interact with sherlock via it's UDP server. By default, it will be listening on port `8081`, or you can use the `--udp-port` option when starting. 
+
+To send in a property simply follow this structure: `entity|property|value`, `entity|property:(string|date|bool|int)|(set|reset|add|remove):value(if necessary)`.
+
+A quick note. Once you define a property type once on that entity, you don't have to anytime thereafter.
+
+Here are a few examples:
+
+```bash
+
+$ echo -n "kcmerrill|this.is.an.event" | nc -w 0 -u localhost 8081 # creates an event
+$ echo -n "kcmerrill|counter:int|100" | nc -w 0 -u localhost 8081 # sets counter property(by default an int) to 100. Notice the :int
+$ echo -n "kcmerrill|email:string|kcmerrill@gmail.com" | nc -w 0 -u localhost 8081 # notice no property type. String is the default
+$ echo -n "kcmerrill|counter|add:1" | nc -w 0 -u localhost 8081 # adds 1 to our counter
+$ echo -n "kcmerrill|counter|remove:1" | nc -w 0 -u localhost 8081 # removes 1 to our counter
+$ echo -n "kcmerrill|counter|reset" | nc -w 0 -u localhost 8081 # resets our counter to 0
+$ echo -n "kcmerrill|logged.in:bool|true" | nc -w 0 -u localhost 8081 # sets logged.in property which is a bool to true
+$ echo -n "kcmerrill|logged.in|false" | nc -w 0 -u localhost 8081 # sets logged.in property which is a bool to true, notice how we don't need to use bool anymore?
+$ echo -n "kcmerrill|logged.in|reset" | nc -w 0 -u localhost 8081 # sets logged.in to it's reset state(false)
+
+```
+
+## HTTP
+
+You can also interact with sherlock via it's HTTP server. By default, it will be listening on port `80`, or you can use the `--web-port` option when starting.
+
+Both UDP and HTTP interactions should look similiar
+
+A quick note. Once you define a property type once on that entity, you don't have to anytime thereafter.
+
+```bash
+
+$ curl -X GET http://localhost/kcmerrill/my.event.here # Will create an event
+$ curl -X GET http://localhost/kcmerrill/logged.in:bool/true # Will create a bool property and set it to true
+$ curl -X GET http://localhost/kcmerrill/counter/100 # Will create an int property and set it to 100
+$ curl -X GET http://localhost/kcmerrill/counter/add:1 # Will add 1 to our counter
+$ curl -X GET http://localhost/kcmerrill/counter/remove:1 # Will remove 1 from our counter
+
+```

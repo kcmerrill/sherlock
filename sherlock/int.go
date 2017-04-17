@@ -98,3 +98,8 @@ func (i *Int) Remove(something interface{}) {
 	i.Value -= by
 	i.Modified = time.Now()
 }
+
+// Type returns the type of this property
+func (i *Int) Type() string {
+	return "int"
+}

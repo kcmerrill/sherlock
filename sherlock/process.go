@@ -14,10 +14,16 @@ func (s *Sherlock) Process(msg, del string) {
 		return
 	}
 
+	if len(bits) == 2 {
+		// oh snap! we have an entity and an event!
+		s.E(bits[0]).Event(bits[1])
+		return
+	}
+
 	// lets setup our vars
 	entity := bits[0]
 	property := bits[1]
-	pType := "int"
+	pType := "string"
 	action := bits[2]
 	value := ""
 
@@ -37,6 +43,8 @@ func (s *Sherlock) Process(msg, del string) {
 	}
 
 	p := s.E(entity).NewProperty(property, pType)
+	// if it already existed ... lets use it!
+	pType = p.Type()
 
 	switch action {
 	case "reset":

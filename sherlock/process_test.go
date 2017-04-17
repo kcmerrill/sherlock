@@ -16,11 +16,17 @@ func TestStringProcessor(t *testing.T) {
 	if s.E("kcmerrill").S("username").String() != "" {
 		log.Fatalf("The username once reset, should be empty")
 	}
+
+	s.Process("kcmerrill|email|kcmerrill@gmail.com", "|")
+
+	if s.E("kcmerrill").S("email").String() != "kcmerrill@gmail.com" {
+		log.Fatalf("email should be a string by default")
+	}
 }
 
 func TestIntProcessor(t *testing.T) {
 	s := New()
-	s.Process("kcmerrill|counter|add:1", "|")
+	s.Process("kcmerrill|counter:int|add:1", "|")
 
 	if s.E("kcmerrill").I("counter").Int() != 1 {
 		log.Fatalf("counter should = 1")
