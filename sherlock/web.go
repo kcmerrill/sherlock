@@ -1,6 +1,7 @@
 package sherlock
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -14,6 +15,7 @@ func (s *Sherlock) Web(port string) {
 	r := mux.NewRouter()
 
 	// setup our routes
+	r.HandleFunc("/_all", s.WebEntityAll)
 	r.HandleFunc("/{entity}", s.WebEntity)
 	r.HandleFunc("/{entity}/{property}/{action}", s.WebProcess)
 	r.HandleFunc("/{entity}/{event}", s.WebEvent)
@@ -28,6 +30,20 @@ func (s *Sherlock) Web(port string) {
 
 	// start serving
 	log.Fatal(srv.ListenAndServe())
+}
+
+// WebEntityAll handler for web requests with new messages
+func (s *Sherlock) WebEntityAll(response http.ResponseWriter, request *http.Request) {
+	s.lock.Lock()
+	j, err := json.Marshal(s.Entities)
+	s.lock.Unlock()
+	if err == nil {
+		response.WriteHeader(http.StatusOK)
+		fmt.Fprintf(response, string(j))
+	} else {
+		response.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(response, "{}")
+	}
 }
 
 // WebEntity handler for web requests with new messages
