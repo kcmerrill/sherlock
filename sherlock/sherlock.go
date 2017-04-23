@@ -170,8 +170,9 @@ type Property interface {
 
 // Sherlock struct
 type Sherlock struct {
-	lock     *sync.Mutex
-	Entities map[string]*Entity `json:"entities"`
+	AuthToken string
+	lock      *sync.Mutex
+	Entities  map[string]*Entity `json:"entities"`
 }
 
 // E is shorthand for Entity

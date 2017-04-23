@@ -11,14 +11,17 @@ import (
 )
 
 // Web starts our webserver on a given port
-func (s *Sherlock) Web(port string) {
+func (s *Sherlock) Web(port, auth string) {
+	// set our auth token
+	s.AuthToken = auth
+
 	r := mux.NewRouter()
 
 	// setup our routes
-	r.HandleFunc("/_all", s.WebEntityAll)
-	r.HandleFunc("/{entity}", s.WebEntity)
-	r.HandleFunc("/{entity}/{property}/{action}", s.WebProcess)
-	r.HandleFunc("/{entity}/{event}", s.WebEvent)
+	r.HandleFunc("/_all", s.basicauth(s.WebEntityAll))
+	r.HandleFunc("/{entity}", s.basicauth(s.WebEntity))
+	r.HandleFunc("/{entity}/{property}/{action}", s.basicauth(s.WebProcess))
+	r.HandleFunc("/{entity}/{event}", s.basicauth(s.WebEvent))
 
 	// set some defaults
 	srv := &http.Server{
@@ -85,5 +88,16 @@ func (s *Sherlock) WebProcess(response http.ResponseWriter, request *http.Reques
 	} else {
 		response.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(response, "{}")
+	}
+}
+
+func (s *Sherlock) basicauth(fn http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token, _, _ := r.BasicAuth()
+		if s.AuthToken != "" && s.AuthToken != token {
+			http.Error(w, `{"error": "unauthorized"}`, http.StatusUnauthorized)
+			return
+		}
+		fn(w, r)
 	}
 }
