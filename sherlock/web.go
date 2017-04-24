@@ -52,6 +52,15 @@ func (s *Sherlock) WebEntityAll(response http.ResponseWriter, request *http.Requ
 // WebEntity handler for web requests with new messages
 func (s *Sherlock) WebEntity(response http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
+	ignore := []string{"favicon.ico", "robot.txt"}
+
+	for _, i := range ignore {
+		if i == vars["entity"] {
+			// no need to go on, just return
+			return
+		}
+	}
+
 	j, err := s.E(vars["entity"]).String()
 	if err == nil {
 		response.WriteHeader(http.StatusOK)
