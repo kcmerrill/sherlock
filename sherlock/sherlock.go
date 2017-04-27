@@ -12,6 +12,7 @@ type Entity struct {
 	lock       *sync.Mutex
 	Properties map[string]Property `json:"properties"`
 	Events     []*Event            `json:"events"`
+	maxEvents  int
 }
 
 // Event object tracks a specific event
@@ -173,6 +174,7 @@ type Sherlock struct {
 	AuthToken string
 	lock      *sync.Mutex
 	Entities  map[string]*Entity `json:"entities"`
+	maxEvents int
 }
 
 // E is shorthand for Entity
@@ -187,23 +189,23 @@ func (s *Sherlock) Entity(id string) *Entity {
 
 	if _, exists := s.Entities[id]; !exists {
 		// we need to create a blank entity
-		s.Entities[id] = NewEntity(id)
+		s.Entities[id] = NewEntity(id, s.maxEvents)
 	}
 
 	return s.Entities[id]
 }
 
 // New returns a newly initialized sherlock
-func New() *Sherlock {
-	s := &Sherlock{}
+func New(maxEvents int) *Sherlock {
+	s := &Sherlock{maxEvents: maxEvents}
 	s.lock = &sync.Mutex{}
 	s.Entities = make(map[string]*Entity)
 	return s
 }
 
 // NewEntity returns a new entity
-func NewEntity(id string) *Entity {
-	e := &Entity{ID: id}
+func NewEntity(id string, maxEvents int) *Entity {
+	e := &Entity{ID: id, maxEvents: maxEvents}
 	e.Properties = make(map[string]Property)
 	e.lock = &sync.Mutex{}
 	e.Events = make([]*Event, 0)

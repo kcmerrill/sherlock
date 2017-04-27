@@ -102,6 +102,7 @@ func (s *Sherlock) WebProcess(response http.ResponseWriter, request *http.Reques
 
 func (s *Sherlock) basicauth(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		token, _, _ := r.BasicAuth()
 		if s.AuthToken != "" && s.AuthToken != token {
 			http.Error(w, `{"error": "unauthorized"}`, http.StatusUnauthorized)

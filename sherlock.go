@@ -17,7 +17,7 @@ func main() {
 	flag.StringVar(&web, "web-port", "80", "The port in which to handle WEB requests")
 	flag.StringVar(&auth, "auth", "", "The authentication token used to access sherlock. No auth if left blank.")
 	flag.Parse()
-	s := sherlock.New()
+	s := sherlock.New(100)
 	go s.UDP(udp)
 	s.Web(web, auth)
 }

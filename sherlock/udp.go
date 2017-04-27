@@ -12,7 +12,13 @@ func (s *Sherlock) UDP(port string) {
 	if serverErr != nil {
 		log.WithFields(log.Fields{"type": "udp", "port": port}).Error("Unable to start server")
 	}
-	conn, _ := net.ListenUDP("udp", server)
+	conn, err := net.ListenUDP("udp", server)
+	if err != nil {
+		log.Fatal(err.Error())
+		return
+	} else {
+		defer conn.Close()
+	}
 	defer conn.Close()
 
 	buf := make([]byte, 1024)

@@ -4,7 +4,7 @@ import "testing"
 import "log"
 
 func TestStringProcessor(t *testing.T) {
-	s := New()
+	s := New(100)
 	s.Process("kcmerrill|username:string|kcmerrill", "|")
 
 	if s.E("kcmerrill").S("username").String() != "kcmerrill" {
@@ -25,7 +25,7 @@ func TestStringProcessor(t *testing.T) {
 }
 
 func TestIntProcessor(t *testing.T) {
-	s := New()
+	s := New(100)
 	s.Process("kcmerrill|counter:int|add:1", "|")
 
 	if s.E("kcmerrill").I("counter").Int() != 1 {
@@ -58,7 +58,7 @@ func TestIntProcessor(t *testing.T) {
 }
 
 func TestBoolProcessor(t *testing.T) {
-	s := New()
+	s := New(100)
 
 	s.Process("kcmerrill|logged.in:bool|true", "|")
 

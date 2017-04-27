@@ -3,7 +3,7 @@ package sherlock
 import "testing"
 
 func TestBool(t *testing.T) {
-	s := New()
+	s := New(100)
 	b := s.E("kcmerrill").B("awesome")
 
 	// default, should be false :(

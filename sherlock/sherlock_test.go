@@ -4,7 +4,7 @@ import "testing"
 import "time"
 
 func TestSherlockEntity(t *testing.T) {
-	s := New()
+	s := New(100)
 	s.Entity("kcmerrill@gmail.com").NewProperty("username", "string").Set("themayor")
 
 	if name := s.Entity("kcmerrill@gmail.com").Property("username").String(); name != "themayor" {
@@ -41,7 +41,7 @@ func TestSherlockEntity(t *testing.T) {
 }
 
 func TestShortValueCreators(t *testing.T) {
-	s := New()
+	s := New(100)
 	s.E("kcmerrill").I("counter").Set(10)
 	if count := s.E("kcmerrill").I("counter").Int(); count != 10 {
 		t.Fatalf("Expected 10, Actual: %d", count)
@@ -74,7 +74,7 @@ func TestShortValueCreators(t *testing.T) {
 }
 
 func TestEntityHas(t *testing.T) {
-	s := New()
+	s := New(100)
 	s.E("kcmerrill@gmail.com")
 	if s.E("kcmerrill@gmail.com").Has("username") {
 		t.Fatalf("We didn't set an email on this entity ... should not exist")
