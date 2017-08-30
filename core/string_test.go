@@ -1,4 +1,4 @@
-package sherlock
+package core
 
 import "testing"
 
