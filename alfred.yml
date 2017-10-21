@@ -1,3 +1,23 @@
+deploy:
+  summary: Deploys sherlock
+  tasks: git.deploy docker.deploy
+
+git.deploy:
+  summary: Commit to git
+  command: |
+    git status
+    echo "Ok to commit these files? Ctrl + C to cancel. Enter to continue"
+    read
+    git add .
+    git commit
+    git push origin master
+
+docker.deploy:
+  summary: Build/Push to docker registry
+  command: |
+    docker build -t kcmerrill/sherlock .
+    docker push kcmerrill/sherlock
+
 tdd:
   watch: ".*?go$"
   tasks: test
